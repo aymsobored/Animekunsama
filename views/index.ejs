@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Home | Animekunsama</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+
+    
+    <%- include("partials/header.ejs") %>
+    <!-- welcome section -->
+    <div class="container welcome">
+        <h1><%= locals.welcomePage.name %></h1>
+        <p><%= locals.welcomePage.description %></p>
+        <p><%= locals.welcomePage.description2 %></p>
+        
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button class="btn btn-info me-md-2" type="button">Update</button>     
+            <button class="btn  btn-outline-danger delete" type="submit">Delete</button>
+
+            <!-- delete welcome page content -->
+          <script>
+            $( ".delete" ).on( "click", function() {
+                $(".welcome").slideUp();
+              
+            } );
+            </script>
+          </div>
+
+    </div>
+    <!-- post section -->
+    <div class="container">
+        <h2>Threads 📃</h2>
+        <div class="threads"> <!-- posted status -->
+                    <% if (locals.titleContent || locals.statusContent) { %>
+                        <h3 class="editTitle"><%= locals.titleContent %></h3>
+                        <p class="editContent"><%=  locals.statusContent%></p>
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                          <button class="btn btn-info me-md-2 update" type="button">Update</button>
+                          <button class="btn  btn-outline-danger remove" type="button">Delete</button>
+                        </div>
+                       
+                      <% } %></div>
+                   
+
+                                  <!-- delete welcome page content -->
+          <script>
+            $(".update").on("click", function() {
+                var title = prompt("Change the title:");
+                var content = prompt("Change the content:");
+                $(".editTitle").text(title); 
+                $(".editContent").text(content); 
+            });
+
+
+            $( ".remove" ).on( "click", function() {
+                $(".threads").slideUp();
+              
+            } );
+            </script>
+
+        <form action="/status" method="POST">
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Title:</label>
+              <input type="text" class="form-control" name="topic" placeholder="Your threads">
+            </div>
+    
+            <div class="mb-3">
+              <label for="exampleFormControlTextarea1" class="form-label">Discussions:</label>
+              <textarea class="form-control" name="status" rows="3" placeholder="What's on your mind about Anime?"></textarea>
+            </div>
+          
+              <div class="d-grid gap-2 col-6 mx-auto">
+                <button class="btn btn-primary" type="submit">Share It</button>
+              </div>
+            </form>
+        
+    </div>
+
+
+
+
+
+
+    
+
+    <%- include("partials/footer.ejs") %>
+    
+
+</body>
+</html>
